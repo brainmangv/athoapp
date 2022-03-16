@@ -28,16 +28,15 @@ class AccountRepository {
   }
 
   Future<bool> verifyEmail(String email) async {
-    late Response response;
     try {
-      response = await _dio.post(
+      final response = await _dio.post(
         '/verify_email',
         data: {'email': email},
       );
       print(response);
       return response.statusCode == 200 ? true : false;
     } catch (e) {
-      print(response);
+      print(e);
       return false;
     }
   }
@@ -45,10 +44,8 @@ class AccountRepository {
   Future<List<SubscribedCourse>> subscribedCourses() async {
     final response = await _dio.get('/users/me/subscribed-courses');
 
-    final List<SubscribedCourse> subscribedCourses = response.data['data']
-        .map((e) => SubscribedCourse.fromJson(e))
-        .cast<SubscribedCourse>()
-        .toList();
+    final List<SubscribedCourse> subscribedCourses =
+        response.data['data'].map((e) => SubscribedCourse.fromJson(e)).cast<SubscribedCourse>().toList();
 
     return subscribedCourses;
   }
