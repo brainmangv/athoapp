@@ -21,8 +21,7 @@ class CourseView extends StatefulWidget {
   _CourseViewState createState() => _CourseViewState();
 }
 
-class _CourseViewState extends State<CourseView>
-    with SingleTickerProviderStateMixin {
+class _CourseViewState extends State<CourseView> with SingleTickerProviderStateMixin {
   bool _isLoading = true;
   late TabController _tabController;
   // int selectedIndex = 0;
@@ -57,11 +56,9 @@ class _CourseViewState extends State<CourseView>
 
   Future<void> loadAsync() async {
     curriculum = await this.courseRepository.curriculum(course.id);
-    completedLectures =
-        await this.courseRepository.completedLectures(course.id);
+    completedLectures = await this.courseRepository.completedLectures(course.id);
 
-    Provider.of<AppStore>(context, listen: false)
-        .setCurrentLecture(curriculum.chapters.first.lectures?.first);
+    Provider.of<AppStore>(context, listen: false).setCurrentLecture(curriculum.chapters.first.lectures?.first);
     setState(() => _isLoading = false);
   }
 
@@ -96,10 +93,9 @@ class _CourseViewState extends State<CourseView>
                     aspectRatio: 16 / 9,
                     child: Container(
                       color: Colors.black,
-                      child:
-                          Consumer<AppStore>(builder: (context, store, child) {
+                      child: Consumer<AppStore>(builder: (context, store, child) {
                         _urlKey = UniqueKey();
-                        print('consumer: ${_urlKey.hashCode}');
+                        // print('consumer: ${_urlKey.hashCode}');
                         return Column(children: [
                           store.currentLecture?.asset?.mediaSource != null
                               ? CourseVideoPlayer(
@@ -112,8 +108,7 @@ class _CourseViewState extends State<CourseView>
                     ),
                   ),
                   Container(
-                    decoration: new BoxDecoration(
-                        color: Theme.of(context).primaryColor),
+                    decoration: new BoxDecoration(color: Theme.of(context).primaryColor),
                     child: TabBar(
                       controller: _tabController,
                       tabs: myTabs,
@@ -136,14 +131,12 @@ class _CourseViewState extends State<CourseView>
                           visible: _tabController.index == 0,
                           child: CourseCurriculum(
                             chapters: curriculum.chapters,
-                            selectedLecture: 0,
                             completedLectures: completedLectures,
                           ),
                         ),
                         Visibility(
                             visible: _tabController.index == 1,
-                            child: Text('This is the  tab 2',
-                                style: const TextStyle(fontSize: 26)))
+                            child: Text('This is the  tab 2', style: const TextStyle(fontSize: 26)))
                       ],
                     ),
                   )

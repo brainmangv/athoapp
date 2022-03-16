@@ -1,10 +1,8 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:atho/repositories/account_repository.dart';
 import 'package:atho/repositories/api.dart';
 import 'package:atho/stores/app.store.dart';
-import 'package:atho/views/course_view.dart';
 import 'package:atho/views/course_view.dart';
 import 'package:atho/views/home_view.dart';
 import 'package:atho/views/onboarding_view.dart';
@@ -21,8 +19,7 @@ Future<void> main() async {
     FlutterError.dumpErrorToConsole(details);
     if (kReleaseMode) exit(1);
   };
-  runApp(
-      ChangeNotifierProvider(create: (context) => AppStore(), child: MyApp()));
+  runApp(ChangeNotifierProvider(create: (context) => AppStore(), child: MyApp()));
 }
 
 class MyHome extends StatelessWidget {
@@ -43,9 +40,7 @@ class MyHome extends StatelessWidget {
 
         // Once complete, show your application
         if (snapshot.connectionState == ConnectionState.done) {
-          return (api.options.headers['Authorization'] == null)
-              ? OnboardingScreen()
-              : HomeView();
+          return (api.options.headers['Authorization'] == null) ? OnboardingScreen() : HomeView();
         }
 
         // Otherwise, show something whilst waiting for initialization to complete
@@ -80,8 +75,7 @@ class MyApp extends StatelessWidget {
         ),
         cardTheme: CardTheme(
             elevation: 5,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0)),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
             margin: EdgeInsets.all(0)),
 
         textTheme: TextTheme(subtitle1: TextStyle(fontSize: 16)),
@@ -100,8 +94,7 @@ class MyApp extends StatelessWidget {
         backgroundColor: Colors.green,
         brightness: Brightness.light,
         primaryColor: Colors.black,
-        textSelectionTheme: TextSelectionThemeData(
-            selectionColor: Colors.purple, cursorColor: Colors.red),
+        textSelectionTheme: TextSelectionThemeData(selectionColor: Colors.purple, cursorColor: Colors.red),
         accentColor: Colors.red[600],
         //accentColor: Colors.yellow,
         //primarySwatch: Colors.green,

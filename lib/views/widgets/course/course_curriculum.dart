@@ -7,58 +7,53 @@ import 'package:provider/provider.dart';
 
 class CourseCurriculum extends StatelessWidget {
   final List<ChapterModel> chapters;
-  final int selectedLecture;
   final List<int> completedLectures;
 
-  const CourseCurriculum(
-      {required this.chapters, required this.selectedLecture, required this.completedLectures, Key? key})
-      : super(key: key);
+  const CourseCurriculum({required this.chapters, required this.completedLectures, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AppStore>(builder: (context, store, child) {
-      print('Build curriculum');
-      return ListView.builder(
-          //  separatorBuilder: (BuildContext context, int index) => const Divider(),
-          padding: const EdgeInsets.all(10),
-          shrinkWrap: true,
-          itemCount: this.chapters.length,
-          itemBuilder: (BuildContext context, int i) {
-            // print('ListView.builder');
-            return Column(children: [
+    print('Build curriculum');
+    return ListView.builder(
+        //  separatorBuilder: (BuildContext context, int index) => const Divider(),
+        padding: const EdgeInsets.all(10),
+        shrinkWrap: true,
+        itemCount: this.chapters.length,
+        itemBuilder: (BuildContext context, int i) {
+          // print('ListView.builder');
+          return Column(children: [
+            ListTile(
+                contentPadding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
+                title: Text('Capitulo ${i + 1} - ' + this.chapters[i].title,
+                    style: TextStyle(fontWeight: FontWeight.w800, fontSize: 14), overflow: TextOverflow.ellipsis)),
+            this.chapters[i].lectures != null
+                ? ListLectures(
+                    lectures: this.chapters[i].lectures!,
+                    completedLectures: this.completedLectures,
+                  )
+                : Container(),
+            if (i == this.chapters.length - 1)
               ListTile(
-                  contentPadding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
-                  title: Text('Capitulo ${i + 1} - ' + this.chapters[i].title,
-                      style: TextStyle(fontWeight: FontWeight.w800, fontSize: 14), overflow: TextOverflow.ellipsis)),
-              this.chapters[i].lectures != null
-                  ? ListLectures(
-                      lectures: this.chapters[i].lectures!,
-                      completedLectures: this.completedLectures,
-                    )
-                  : Container(),
-              if (i == this.chapters.length - 1)
-                ListTile(
-                  title: Container(
-                      width: 376,
-                      child: Text(
-                        "Questionario",
-                        style: TextStyle(fontSize: 18, color: Colors.black),
-                        overflow: TextOverflow.ellipsis,
-                      )),
-                  // selectedTileColor: Colors.lightBlue[50],
-                  // selected: i == selectedLecture ? true : false,
-                  autofocus: false,
-                  enabled: true,
-                  onTap: () {
-                    print('Questionario onTap');
-                    // Provider.of<AppStore>(context, listen: false)
-                    //     .setCurrentLecture(completedLectures[i]);
-                  },
-                  leading: Icon(Icons.app_registration_sharp, color: Colors.lightBlue[200], size: 20),
-                ),
-            ]);
-          });
-    });
+                title: Container(
+                    width: 376,
+                    child: Text(
+                      "Questionario",
+                      style: TextStyle(fontSize: 18, color: Colors.black),
+                      overflow: TextOverflow.ellipsis,
+                    )),
+                // selectedTileColor: Colors.lightBlue[50],
+                // selected: i == selectedLecture ? true : false,
+                autofocus: false,
+                enabled: true,
+                onTap: () {
+                  print('Questionario onTap');
+                  // Provider.of<AppStore>(context, listen: false)
+                  //     .setCurrentLecture(completedLectures[i]);
+                },
+                leading: Icon(Icons.app_registration_sharp, color: Colors.lightBlue[200], size: 20),
+              ),
+          ]);
+        });
   }
 }
 
