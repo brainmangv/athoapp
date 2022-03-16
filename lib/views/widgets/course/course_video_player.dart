@@ -29,17 +29,16 @@ class _CourseVideoPlayerState extends State<CourseVideoPlayer> {
   void initState() {
     super.initState();
     initController();
-    print('course_video_player initState');
+    // print('course_video_player initState');
   }
 
   Future<void> initController() async {
-    _controller = VideoPlayerController.network(widget.videoUrl,
-        videoPlayerOptions: VideoPlayerOptions(mixWithOthers: false));
+    _controller =
+        VideoPlayerController.network(widget.videoUrl, videoPlayerOptions: VideoPlayerOptions(mixWithOthers: false));
     await _controller.initialize();
     _controller.addListener(checkVideoPosition);
 
-    chewieController = ChewieController(
-        videoPlayerController: _controller, autoPlay: true, looping: false);
+    chewieController = ChewieController(videoPlayerController: _controller, autoPlay: true, looping: false);
     setState(() => _isLoading = false);
   }
 
@@ -48,17 +47,15 @@ class _CourseVideoPlayerState extends State<CourseVideoPlayer> {
     _controller.dispose();
     chewieController.dispose();
     super.dispose();
-    print('*CourseVideoPlayer disposed');
+    // print('*CourseVideoPlayer disposed');
   }
 
   @override
   Widget build(BuildContext context) {
-    print('*CourseVideoPlayer Build');
+    // print('*CourseVideoPlayer Build');
     return AspectRatio(
         aspectRatio: 16 / 9,
         // aspectRatio: _controller.value.aspectRatio,
-        child: _isLoading
-            ? Center(child: CircularProgressIndicator())
-            : Chewie(controller: chewieController));
+        child: _isLoading ? Center(child: CircularProgressIndicator()) : Chewie(controller: chewieController));
   }
 }
