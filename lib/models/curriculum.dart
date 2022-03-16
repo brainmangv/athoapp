@@ -9,7 +9,7 @@ class CurriculumModel {
 
   CurriculumModel.fromJson(Map<String, dynamic> json) {
     if (json['chapters'] != null) {
-      chapters = [];
+      this.chapters = [];
       //chapters = [].map((e) => null);
       json['chapters'].forEach((v) {
         final chapter = new ChapterModel.fromJson(v);
@@ -18,9 +18,9 @@ class CurriculumModel {
     }
 
     if (json['quiz'] != null) {
-      quiz = [];
+      this.quiz = [];
       json['quiz'].forEach((v) {
-        this.quiz.add(new QuizModel.fromJson(v));
+        if (v != null) this.quiz.add(new QuizModel.fromJson(v));
       });
     }
   }
